@@ -1,0 +1,12 @@
+{
+  "name": "grammer",
+  "version": "1.0.0",
+  "description": "typescript grammer",
+  "main": "./src/helloworld.js",
+  "scripts": {
+    "prestart" : "tsc",
+    "start": "node ./src/helloworld"
+  },
+  "author": "",
+  "license": "MIT"
+}
