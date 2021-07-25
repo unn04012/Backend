@@ -1,7 +1,9 @@
 import express from 'express';
 import nunjucks from 'nunjucks';
-import {sequelize} from './models';
 import passportConfig from './passport';
+import User from './models/user';
+import Domain from './models/domain';
+// const { sequelize } = require('./models');
 
 /**
  * const express = require('express');
@@ -22,28 +24,23 @@ const passportConfig = require('./passport');
 
 
 export default class App{
-  app = express();  
-  port;
+  app = express();    
+  port;  
   constructor(appConfig){
-    this.port = appConfig.port;        
-    this.applySettings(appConfig.settings);
     passportConfig();
     nunjucks.configure('views', { // 폴더 경로
       express: this.app,
       watch: true,
-    });
-    sequelize.sync({ force: false })
-      .then(() => {
-        console.log('데이터베이스 연결 성공');
-      })
-      .catch((err) => {
-        console.error(err);
-    });
+    }); 
+
+    this.port = appConfig.port;        
+    this.applySettings(appConfig.settings);           
     this.applyRoutes(appConfig.routes);    
     this.applyMiddlewares(appConfig.middlewares);
     this.app.use(this.notFoundError)
     this.app.use(this.serverError);
   }
+  
 
   applySettings(settings){
     settings.forEach(setting => {

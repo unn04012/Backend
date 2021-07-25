@@ -1,6 +1,6 @@
-const Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
 
-module.exports = class Domain extends Sequelize.Model {
+export default class Domain extends Sequelize.Model {
     static init(sequelize){
         return super.init({
             host: {

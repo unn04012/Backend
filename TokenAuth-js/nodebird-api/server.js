@@ -14,17 +14,47 @@ import passport from 'passport';
 
 import Auth from './routes/Auth'; 
 import Index from './routes/Index';
+
 import App from './app';
-import {sequelize} from './models';
+
+import sequelize from './models';
+import User from './models/user';
+import Domain from './models/domain';
+
 dotenv.config();
-const app = express();
 
+/**
+ * DEFINE MODELS
+ * @OBJECT
+ * name : modelName;
+ * value : modelObject
+ */
+ const models = [
+    {name : 'User',   value : User},
+    {name : 'Domain', value : Domain},
+ ];
 
+ // MIGRATION
+ new sequelize(models).db.sequelize.sync({ force: false })
+      .then(() => {
+        console.log('데이터베이스 연결 성공');
+      })
+      .catch((err) => {
+        console.error(err);
+ });
+
+/**
+ * DEFINE ROUTES
+ * @OBJECT
+ */
 const routes = [
     new Auth(),
     new Index(),
 ]
 
+/**
+ * DEFINE MIDDLEWARES
+ */
 
 const middlewares = [
     morgan('dev'),
@@ -45,7 +75,9 @@ const middlewares = [
     passport.session(), 
 ]
 
-
+/**
+ * DEFINE SETTINGS FOR express().set
+ */
 
 const settings = [
   {key : 'port', value : process.env.PORT || 8002},
@@ -59,5 +91,5 @@ const appConfig = {
     port : process.env.PORT || 3000,
 };
 
-
+// CREATE SERVER
 new App(appConfig).listen();
