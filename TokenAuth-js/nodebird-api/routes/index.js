@@ -1,10 +1,16 @@
 import express from 'express';
 import {v4 as uuidv4} from 'uuid';
-import { User, Domain } from '../models';
+import sequelize from '../models';
+import User from '../models/user';
+import Domain from '../models/domain';
 import {isLoggedIn} from './middlewares';
 
 export default class Index{
     path = '/';
+    models = [
+        {name : 'User', }
+    ]
+    User = new sequelize()
     router = express.Router();
     constructor(){        
         this.router.get('/', this.index);
