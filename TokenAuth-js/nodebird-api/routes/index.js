@@ -6,11 +6,7 @@ import Domain from '../models/domain';
 import {isLoggedIn} from './middlewares';
 
 export default class Index{
-    path = '/';
-    models = [
-        {name : 'User', }
-    ]
-    User = new sequelize()
+    path = '/';        
     router = express.Router();
     constructor(){        
         this.router.get('/', this.index);

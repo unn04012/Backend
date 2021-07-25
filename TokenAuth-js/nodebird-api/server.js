@@ -17,25 +17,15 @@ import Index from './routes/Index';
 
 import App from './app';
 
-import sequelize from './models';
-import User from './models/user';
-import Domain from './models/domain';
+import model from './models';
+
 
 dotenv.config();
 
-/**
- * DEFINE MODELS
- * @OBJECT
- * name : modelName;
- * value : modelObject
- */
- const models = [
-    {name : 'User',   value : User},
-    {name : 'Domain', value : Domain},
- ];
 
- // MIGRATION
- new sequelize(models).db.sequelize.sync({ force: false })
+
+
+ model.sequelize.sync({ force: false })
       .then(() => {
         console.log('데이터베이스 연결 성공');
       })

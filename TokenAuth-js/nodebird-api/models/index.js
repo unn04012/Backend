@@ -1,11 +1,13 @@
 import Sequelize from 'sequelize';
 import config from '../config/config';
+import User from './user';
+import Domain from './domain';
 
 const env = process.env.NODE_ENV || 'development';
 
 
 
-export default class sequelize {
+class Index {
   db = {};  
   sequelize = new Sequelize(
     config[env].database, config[env].username, config[env].password, config[env],
@@ -13,7 +15,7 @@ export default class sequelize {
 
   constructor(models){            
     this.db.sequelize = this.sequelize;        
-    this.migration(models);
+    this.migration(models);    
   };
 
   migration(models){
@@ -37,32 +39,21 @@ export default class sequelize {
     models.forEach(model => {
       model.value.associate(this.db);
     })
-  }
-
-  run(){
-    console.log(typeof this.db.User);
-    console.log(typeof this.db.Domain);
-    return this.db;
-  }
+  } 
 } 
 
+/**
+ * DEFINE MODELS
+ * @OBJECT
+ * name : modelName;
+ * value : modelObject
+ */
 
-// const db = {};
-// const sequelize = new Sequelize(
-//   config[env].database, config[env].username, config[env].password, config[env],
-// );
+const models = [
+  {name : 'User',   value : User},
+  {name : 'Domain', value : Domain},
+];
 
-// db.sequelize = sequelize;
-// db.User = User;
-// db.Domain = Domain;
+const sequelize = new Index(models);
 
-// User.init(sequelize);
-// Domain.init(sequelize);
-
-// User.associate(db);
-// Domain.associate(db);
-// console.log(db.User);
-// console.log(typeof db.User);
-// console.log(db);
-
-// module.exports = db;
+export default sequelize.db;
