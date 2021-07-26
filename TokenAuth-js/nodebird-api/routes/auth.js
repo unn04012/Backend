@@ -2,7 +2,7 @@ import express from 'express';
 import passport from 'passport';
 import bcrypt from 'bcrypt';
 import { isLoggedIn, isNotLoggedIn } from './middlewares';
-import { User } from '../models';
+import User  from '../models/user';
 
 export default class Auth{
   path = '/auth';
@@ -33,8 +33,8 @@ export default class Auth{
     }
   }
 
-  login = async (req, res, next) => {       
-    passport.authenticate('local', (authError, user, info) => {
+  login = async (req, res, next) => {    
+    passport.authenticate('local', (authError, user, info) => {      
       if (authError) {
         console.error(authError);
         return next(authError);
