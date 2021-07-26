@@ -1,13 +1,12 @@
-const jwt = require('jsonwebtoken');
-exports.isLoggedIn = (req, res, next) => {
+import jwt from 'jsonwebtoken';
+const isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated()) {
       next();
     } else {
       res.status(403).send('로그인 필요');
     }
   };
-  
-  exports.isNotLoggedIn = (req, res, next) => {
+const isNotLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
       next();
     } else {
@@ -16,7 +15,7 @@ exports.isLoggedIn = (req, res, next) => {
     }
   };
 
-exports.verifyToken = (req, res, next) => {
+const verifyToken = (req, res, next) => {
   try{        
     req.decoded = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);        
     return next();
@@ -32,7 +31,8 @@ exports.verifyToken = (req, res, next) => {
       code: 401,
       message : '유효하지 않은 토큰입니다',
     })
-  }
-  
+  }    
 }
+
+export {isLoggedIn, isNotLoggedIn, verifyToken} ;
   

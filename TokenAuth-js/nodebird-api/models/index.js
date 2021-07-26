@@ -1,13 +1,13 @@
 import Sequelize from 'sequelize';
 import config from '../config/config';
-import User from './user';
-import Domain from './domain';
+import dotenv from 'dotenv';
 
+dotenv.config();
 const env = process.env.NODE_ENV || 'development';
 
 
 
-class Index {
+export default  class Index {
   db = {};  
   sequelize = new Sequelize(
     config[env].database, config[env].username, config[env].password, config[env],
@@ -42,18 +42,4 @@ class Index {
   } 
 } 
 
-/**
- * DEFINE MODELS
- * @OBJECT
- * name : modelName;
- * value : modelObject
- */
 
-const models = [
-  {name : 'User',   value : User},
-  {name : 'Domain', value : Domain},
-];
-
-const sequelize = new Index(models);
-
-export default sequelize.db;

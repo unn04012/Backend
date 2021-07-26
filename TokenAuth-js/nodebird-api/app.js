@@ -34,9 +34,9 @@ export default class App{
     }); 
 
     this.port = appConfig.port;        
-    this.applySettings(appConfig.settings);           
-    this.applyRoutes(appConfig.routes);    
-    this.applyMiddlewares(appConfig.middlewares);
+    this.applySettings(appConfig.settings);
+    this.applyMiddlewares(appConfig.middlewares);           
+    this.applyRoutes(appConfig.routes);        
     this.app.use(this.notFoundError)
     this.app.use(this.serverError);
   }

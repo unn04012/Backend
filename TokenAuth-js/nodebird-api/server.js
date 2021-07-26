@@ -14,18 +14,35 @@ import passport from 'passport';
 
 import Auth from './routes/Auth'; 
 import Index from './routes/Index';
+import Token from './routes/Token';
 
 import App from './app';
 
-import model from './models';
+import modelIndex from './models';
+import User from './models/user';
+import Domain from './models/domain';
 
 
 dotenv.config();
 
+/**
+ * DEFINE MODELS
+ * @OBJECT
+ * name : modelName;
+ * value : modelObject
+ */
+
+ const models = [
+    {name : 'User',   value : User},
+    {name : 'Domain', value : Domain},
+ ];
+  
+const model = new modelIndex(models);
+  
 
 
 
- model.sequelize.sync({ force: false })
+ model.db.sequelize.sync({ force: false })
       .then(() => {
         console.log('데이터베이스 연결 성공');
       })
@@ -40,7 +57,8 @@ dotenv.config();
 const routes = [
     new Auth(),
     new Index(),
-]
+    new Token(),
+];
 
 /**
  * DEFINE MIDDLEWARES

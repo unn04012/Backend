@@ -3,8 +3,9 @@ import jwt from 'jsonwebtoken';
 import cors from 'cors';
 import url from 'url';
 import { verifyToken } from './middlewares';
-import { Domain, User } from '../models';
 import { urlencoded } from 'express';
+import Domain from '../models/domain';
+import User from '../models/user';
 
 
 export default class Token{
@@ -12,11 +13,13 @@ export default class Token{
     path = '/token';
 
     constructor(){
+        this.router.use(this.allowServer);
         this.router.post('/create', this.createToken);
-        this.router.get('/test', verifyToken, this.test);
+        this.router.get('/test', verifyToken, this.test);        
     }    
 
-    createToken = async(req, res) => {
+    createToken = async(req, res) => {        
+        console.log(req.body);
         const {clientSecret} = req.body;        
         try{
             const domain = await Domain.findOne({
@@ -25,9 +28,10 @@ export default class Token{
                     model : User,
                     attribute : ['nick', 'id'],
                 },
-            });
-            if(!domain) {
-                return res.status(401).json({
+            });           
+            console.log(domain) ;
+            if(!domain) {                
+                return res.json({
                     code : 401,
                     message : '등록되지 않은 도메인입니다. 먼저 도메인을 등록하세요',
                 });
@@ -56,5 +60,18 @@ export default class Token{
     test = (req, res) =>{
         res.json(req.decoded);
     }
+    allowServer = async (req, res, next) => {
+        const domain = await Domain.findOne({
+            where : {host : new URL(req.get('origin')).host}
+        });    
+        if(domain){
+            cors({
+                origin : req.get('origin'),
+                credentials : true,
+            })(req,res,next);
+        }else{
+            next();
+        }
+    }    
     
 }
