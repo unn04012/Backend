@@ -1,27 +1,6 @@
 import express from 'express';
 import nunjucks from 'nunjucks';
 import passportConfig from './passport';
-import User from './models/user';
-import Domain from './models/domain';
-// const { sequelize } = require('./models');
-
-/**
- * const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const passport = require('passport');
-const morgan = require('morgan');
-const session = require('express-session');
-const nunjucks = require('nunjucks');
-const dotenv = require('dotenv');
-dotenv.config();
-const authRouter = require('./routes/Auth');
-const indexRouter = require('./routes/Index');
-const v1 = require('./routes/v1');
-const { sequelize } = require('./models');
-const passportConfig = require('./passport');
- */
-
 
 export default class App{
   app = express();    
