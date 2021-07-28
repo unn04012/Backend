@@ -13,8 +13,7 @@ export default class Users{
     }
 
     public showUser = async (req : express.Request, res : express.Response, next : any) => {
-        try{
-            console.log('hello world');
+        try{            
             const users = await User.find({});
             res.json(users);
         }catch(err){
@@ -25,9 +24,7 @@ export default class Users{
 
     public createUser = async(req : express.Request, res : express.Response, next : any) => {        
         const {name, age, married} = req.body;        
-        try{
-            console.log(req.body);
-            console.log('hello world');
+        try{            
             const user = await User.create({
                 name : name,
                 age : age,

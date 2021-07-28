@@ -6,10 +6,10 @@ export default class Index{
     public router = express.Router();
 
     constructor(){
-        this.router.use('/', this.index);
+        this.router.get('/', this.index);
     }
     public index = async (req : express.Request, res : express.Response, next : any) => {
-        try{
+        try{            
             const users = await User.find({});
             res.render('mongoose', {users});
         }catch(err){
