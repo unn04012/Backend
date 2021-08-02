@@ -2,6 +2,8 @@
 const appTemplate = require('./templates/app');
 const serverTemplate = require('./templates/server');
 const viewTemplate=  require('./templates/views/');
+const routerTemplate = require('./templates/routes');
+const modelTemplate = require('./templates/models');
 const {program} = require('commander');
 const chalk = require('chalk');
 
@@ -58,6 +60,8 @@ const init = () => {
         {dir : './', name : 'app.js', template : appTemplate},
         {dir : './', name : 'server.js', template : serverTemplate},
         {dir : './views',name : 'index.html',  template : viewTemplate},
+        {dir : './routes',name : 'index.js',  template : routerTemplate},
+        {dir : './models',name : 'index.js',  template : modelTemplate},
     ];
     config.forEach(element => {
         const elementPath = path.join('.', path.normalize(element.dir));        

@@ -21,10 +21,9 @@ dotenv.config();
  * name : modelName;
  * value : modelObject
  */
-
- const models = [
-    {name : 'User',   value : User},
-    {name : 'Domain', value : Domain},
+/**
+ * const models = [
+    {name : 'User',   value : User},    
  ];
   
 const model = new modelIndex(models);
@@ -39,6 +38,8 @@ const model = new modelIndex(models);
       .catch((err) => {
         console.error(err);
  });
+ */
+ 
 
 /**
  * DEFINE ROUTES
