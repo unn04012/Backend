@@ -2,8 +2,10 @@
 const appTemplate = require('./templates/app');
 const serverTemplate = require('./templates/server');
 const viewTemplate=  require('./templates/views/');
+const errorTemplate=  require('./templates/views/error');
 const routerTemplate = require('./templates/routes');
-const modelTemplate = require('./templates/models');
+const modelTemplate = require('./templates/models/template');
+const modelInit = require('./templates/models');
 const {program} = require('commander');
 const chalk = require('chalk');
 
@@ -32,26 +34,27 @@ const mkdirp = (dir) => { // 경로 생성 함수
     });
   };
 
-const makeTemplate = (type, name, directory) => {
-    mkdirp(directory);
-    if (type === 'html') {
-      const pathToFile = path.join(directory, `${name}.html`);
+const makeTemplate = (type, name) => {    
+    if (type === 'router') {
+      if(!exist('./routes')) mkdirp('./routes');      
+      const pathToFile = path.join('./routes', `${name}.js`);
       if (exist(pathToFile)) {
         console.error(chalk.bold.red('The file already exists'));
       } else {
-        fs.writeFileSync(pathToFile, appTemplate);
+        fs.writeFileSync(pathToFile, routerTemplate(name));
         console.log(chalk.green(pathToFile, 'created successfully'));
       }
-    } else if (type === 'express-router') {
-      const pathToFile = path.join(directory, `${name}.js`);
+    } else if (type === 'model') {
+      if(!name) console.error(chalk.bold.red('Please enter a file name'));
+      const pathToFile = path.join('./models', `${name}.js`);
       if (exist(pathToFile)) {
         console.error(chalk.bold.red('The file already exists'));
       } else {
-        fs.writeFileSync(pathToFile, routerTemplate);
-        console.log(chalk.green(pathToFile, '생성 완료'));
+        fs.writeFileSync(pathToFile, modelTemplate(name));
+        console.log(chalk.green(pathToFile, 'created successfully'));
       }
     } else {
-      console.error(chalk.bold.red('html 또는 express-router 둘 중 하나를 입력하세요.'));
+      console.error(chalk.bold.red('Enter either model or router.'));
     }
   };
 
@@ -60,8 +63,9 @@ const init = () => {
         {dir : './', name : 'app.js', template : appTemplate},
         {dir : './', name : 'server.js', template : serverTemplate},
         {dir : './views',name : 'index.html',  template : viewTemplate},
-        {dir : './routes',name : 'index.js',  template : routerTemplate},
-        {dir : './models',name : 'index.js',  template : modelTemplate},
+        {dir : './views',name : 'error.html',  template : errorTemplate},
+        {dir : './routes',name : 'index.js',  template : routerTemplate()},
+        {dir : './models',name : 'index.js',  template : modelInit},
     ];
     config.forEach(element => {
         const elementPath = path.join('.', path.normalize(element.dir));        
@@ -77,22 +81,21 @@ const init = () => {
 }
 
   program
-  .version('0.0.1', '-v, --version')
-  .name('cli');
+  .version('1.0.0', '-v, --version')
+  .name('es6-template');
 
 program
-  .command('template <type>')
-  .usage('<type> --filename [filename] --path [path]')
-  .description('템플릿을 생성합니다.')
-  .alias('tmpl')
-  .option('-f, --filename [filename]', '파일명을 입력하세요.', 'index')
-  .option('-d, --directory [path]', '생성 경로를 입력하세요', '.')
-  .action((type, options) => {
-    makeTemplate(type, options.filename, options.directory);
+  .command('make <type> <filename>')  
+  .description('create template.')  
+  // .option('-t, --type [type]', 'Please enter a type.', '')
+  // .option('-f, --filename [filename]', 'Please enter a file name', 'index')
+  .action((type, filename) => {
+    makeTemplate(type, filename);
   });
 
   program
-  .command('init')      
+  .command('init')     
+  .description('initialize es6 template.')   
   .action(() => {
     init()
   });

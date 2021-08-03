@@ -1,10 +1,6 @@
-const serverTemplate = `
-import express from 'express';
+const serverTemplate = 
+`import express from 'express';
 import path from 'path';
-import cookieParser  from 'cookie-parser';
-import morgan from 'morgan';
-import session from 'express-session';
-import nunjucks from 'nunjucks';
 import dotenv from 'dotenv';
 
 import Index from './routes/Index';
@@ -20,9 +16,8 @@ dotenv.config();
  * @OBJECT
  * name : modelName;
  * value : modelObject
- */
-
- const models = [
+ * 
+ * const models = [
     {name : 'User',   value : User},
     {name : 'Domain', value : Domain},
  ];
@@ -39,38 +34,26 @@ const model = new modelIndex(models);
       .catch((err) => {
         console.error(err);
  });
+ */
+
+ 
 
 /**
  * DEFINE ROUTES
  * @OBJECT
  */
-const routes = [
-    new Auth(),
-    new Index(),
-    new Token(),
+const routes = [    
+    new Index(),    
 ];
 
 /**
  * DEFINE MIDDLEWARES
  */
 
-const middlewares = [
-    morgan('dev'),
+const middlewares = [    
     express.static(path.join(__dirname, 'public')),
     express.json(),
-    express.urlencoded({extended: false}),
-    cookieParser(process.env.COOKIE_SECRET),
-    session({
-        resave: false,
-        saveUninitialized: false,
-        secret: process.env.COOKIE_SECRET,
-        cookie: {
-            httpOnly: true,
-            secure: false,
-            }
-    }),     
-    passport.initialize(),
-    passport.session(), 
+    express.urlencoded({extended: false}),        
 ]
 
 /**

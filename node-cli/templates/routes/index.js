@@ -1,7 +1,8 @@
-const indexRouter = `
-import express from 'express';
+const indexRouter = (className = 'Index') => {
+    let template = 
+`import express from 'express';
 
-export default class Index{
+export default class ${className}{
     path = '/';        
     router = express.Router();
     constructor(){        
@@ -17,4 +18,8 @@ export default class Index{
     }    
 }
 `
+return template;
+}
+
+
 module.exports = indexRouter;

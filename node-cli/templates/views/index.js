@@ -1,5 +1,5 @@
-const viewTemplate = `
-<!DOCTYPE html>
+const viewTemplate = 
+`<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,6 +10,6 @@ const viewTemplate = `
 <body>    
     <h1>{{head}}</h1>    
 </body>
-</html>
-`
+</html>`
+
 module.exports = viewTemplate;

@@ -1,5 +1,5 @@
-const indexModel = `
-import Sequelize from 'sequelize';
+const indexModel = 
+`import Sequelize from 'sequelize';
 import config from '../config/config';
 import dotenv from 'dotenv';
 

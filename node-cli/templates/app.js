@@ -1,13 +1,11 @@
-const appTemplate = `
-import express from 'express';
+const appTemplate = 
+`import express from 'express';
 import nunjucks from 'nunjucks';
-import passportConfig from './passport';
 
 export default class App{
   app = express();    
   port;  
-  constructor(appConfig){
-    passportConfig();
+  constructor(appConfig){    
     nunjucks.configure('views', { // 폴더 경로
       express: this.app,
       watch: true,
@@ -59,6 +57,6 @@ export default class App{
       console.log(this.port, '번 포트에서 대기중');
     });
   }
-}
-`
+}`
+
 module.exports = appTemplate;
