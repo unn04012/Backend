@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon ./server.js --exec babel-node",
     "test": "jest",
-    "coverage" : "jest --coverage"
+    "coverage": "jest --coverage"
   },
   "author": "Zero Cho",
   "license": "ISC",

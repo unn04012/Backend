@@ -1,4 +1,4 @@
-import { isLoggedIn, isNotLoggedIn } from "./middlewares";
+import { isLoggedIn, isNotLoggedIn, verifyToken } from "./middlewares";
 // descritbe : 테스트를 그룹화해주는 역할
 describe('isLoggedIn', () => {
     // 함수를 모킹할 때는 jest.fn() 메서드를 사용
@@ -47,5 +47,21 @@ describe('isNotLoggedIn', () => {
         };
         isNotLoggedIn(req, res, next);
         expect(next).toBeCalledTimes(1);
+    })
+});
+
+describe('verifyToken', () => {
+    const res = {
+        status : jest.fn(),
+        json : {
+            code : 419,
+            message : '토큰이 만료되었습니다.',
+        },
+    };
+    const next = jest.fn();
+    test('true for jwt.verfiy method', () => {
+        const req = {
+            
+        }
     })
 })

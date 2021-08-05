@@ -1,22 +1,22 @@
 import Sequelize from 'sequelize';
-import User from './user';
 import config from '../config/config';
-import { describe } from 'yargs';
-import { expect, jest, test } from '@jest/globals';
+import Domain  from './domain';
 
-const config = config['test'];
 const sequelize = new Sequelize(
-    config.database, config.username,config.password, config,
+    config['test'].database, config['test'].username,config['test'].password, config['test'],
 );
 
 describe('Domain model', () => {
     test('call static init method ', () => {
-        expect(Domain.init(sequelize).toBe(Domain));
+        expect(Domain.init(sequelize)).toBe(Domain);
     });
 
     test('call static associeate method', () => {
         const db = {
-            Domain : {belongsTo : jest.fn()}
+            Domain : {belongsTo : jest.fn()},
+            User  : {},
         };
-    })
+        Domain.associate(db);
+        expect(db.Domain.belongsTo).toHaveBeenCalledWith(db.User);
+    });
 })

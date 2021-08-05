@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1628153153032" clover="3.2.0">
-  <project timestamp="1628153153033" name="All files">
-    <metrics statements="25" coveredstatements="16" conditionals="6" coveredconditionals="4" methods="6" coveredmethods="3" elements="37" coveredelements="23" complexity="0" loc="25" ncloc="25" packages="3" files="3" classes="3"/>
+<coverage generated="1628162586065" clover="3.2.0">
+  <project timestamp="1628162586065" name="All files">
+    <metrics statements="25" coveredstatements="18" conditionals="6" coveredconditionals="4" methods="6" coveredmethods="5" elements="37" coveredelements="27" complexity="0" loc="25" ncloc="25" packages="3" files="3" classes="3"/>
     <package name="controllers">
       <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-      <file name="createDomain.js" path="C:\Users\주)사각\Desktop\mun\Backend\TokenAuth-js\nodebird-api\controllers\createDomain.js">
+      <file name="createDomain.js" path="C:\Users\unn04\Desktop\api\Backend\TokenAuth-js\nodebird-api\controllers\createDomain.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="2" type="stmt"/>
@@ -15,16 +15,16 @@
       </file>
     </package>
     <package name="models">
-      <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
-      <file name="domain.js" path="C:\Users\주)사각\Desktop\mun\Backend\TokenAuth-js\nodebird-api\models\domain.js">
-        <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="28" count="0" type="stmt"/>
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <file name="domain.js" path="C:\Users\unn04\Desktop\api\Backend\TokenAuth-js\nodebird-api\models\domain.js">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
       </file>
     </package>
     <package name="routes">
       <metrics statements="17" coveredstatements="10" conditionals="6" coveredconditionals="4" methods="3" coveredmethods="2"/>
-      <file name="middlewares.js" path="C:\Users\주)사각\Desktop\mun\Backend\TokenAuth-js\nodebird-api\routes\middlewares.js">
+      <file name="middlewares.js" path="C:\Users\unn04\Desktop\api\Backend\TokenAuth-js\nodebird-api\routes\middlewares.js">
         <metrics statements="17" coveredstatements="10" conditionals="6" coveredconditionals="4" methods="3" coveredmethods="2"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="2" type="cond" truecount="2" falsecount="0"/>
