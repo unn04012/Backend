@@ -4,13 +4,15 @@ import sequelize from '../models';
 import User from '../models/user';
 import Domain from '../models/domain';
 import {isLoggedIn} from './middlewares';
+import FindUser from '../controllers/user';
+import createDomain from '../controllers/createDomain';
 
 export default class Index{
     path = '/';        
     router = express.Router();
     constructor(){        
-        this.router.get('/', this.index);
-        this.router.post('/domain', isLoggedIn , this.createDomain);
+        this.router.get('/', FindUser);
+        this.router.post('/domain', isLoggedIn , createDomain);
     }
     index = async(req, res, next) => {
         try{              
