@@ -1,4 +1,9 @@
 import { isLoggedIn, isNotLoggedIn, verifyToken } from "./middlewares";
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+jest.mock('jsonwebtoken');
+
+dotenv.config();
 // descritbe : 테스트를 그룹화해주는 역할
 describe('isLoggedIn', () => {
     // 함수를 모킹할 때는 jest.fn() 메서드를 사용
@@ -28,7 +33,7 @@ describe('isLoggedIn', () => {
     });
 });
 
-describe('isNotLoggedIn', () => {
+describe('isNotLoggedIn', () => {    
     const res = {
         redirect : jest.fn(),
     }
@@ -52,16 +57,67 @@ describe('isNotLoggedIn', () => {
 
 describe('verifyToken', () => {
     const res = {
-        status : jest.fn(),
-        json : {
-            code : 419,
-            message : '토큰이 만료되었습니다.',
-        },
+        status : jest.fn(() => res),
+        json : jest.fn(),
     };
     const next = jest.fn();
-    test('true for jwt.verfiy method', () => {
+    const expiredToken = jwt.sign({
+        id : '1',
+        nick : 'mun',
+    }, process.env.JWT_SECRET, {
+        expiresIn : '1m',
+        issuer: 'unn04012',
+    });
+    test('success for jwt.verfiy method', () => {
+        const token = jwt.sign({
+            id : '1',
+            nick : 'mun',
+        }, process.env.JWT_SECRET, {
+            expiresIn : '1m',
+            issuer: 'unn04012',
+        });
         const req = {
-            
-        }
+            headers : {
+                authorization : token
+            }
+        };
+        verifyToken(req, res, next);
+        expect(next).toBeCalledTimes(1);
+    });
+
+    test('expired for jwt.verify method', () => {
+        const req = {
+            headers : {
+                authorization : expiredToken,
+            }
+        };                        
+        const error = {name : 'TokenExpiredError'};
+        jwt.verify.mockImplementation(() => {
+            throw error;
+        });
+        verifyToken(req, res, next);        
+        expect(res.status).toBeCalledWith(419);        
+        expect(res.json).toBeCalledWith({
+            code : 419,
+            message : '토큰이 만료되었습니다.',            
+        })        
+    });
+
+    test('invalid jwt token', () => {                
+        const req = {
+            headers : {
+                authorization : expiredToken,
+            }
+        };                        
+        const error = {name : 'TokenInvalid'};
+        jwt.verify.mockImplementation(() => {
+            throw error;
+        });
+        verifyToken(req, res, next);        
+        expect(res.status).toBeCalledWith(401);        
+        expect(res.json).toBeCalledWith({            
+                code : 401,
+                message : '유효하지 않은 토큰입니다',            
+        })
     })
 })
