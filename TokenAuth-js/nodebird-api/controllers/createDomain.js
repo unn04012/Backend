@@ -2,7 +2,7 @@ import Domain from '../models/domain';
 import User from '../models/user';
 import {v4 as uuidv4} from 'uuid';
 
-const createDomain = async (req, res, next) => {
+const createDomain = async (req, res, next) => {    
     try{
         await Domain.create({
             UserId : req.user.id,

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 const isLoggedIn = (req, res, next) => {
-    if (req.isAuthenticated()) {
+    if (req.isAuthenticated()) {      
       next();
     } else {
       res.status(403).send('로그인 필요');
