@@ -16,88 +16,89 @@ import Auth from './routes/Auth';
 import Index from './routes/Index';
 import Token from './routes/Token';
 
-import App from './app';
+// import App from './app';
 
 import modelIndex from './models';
 import User from './models/user';
 import Domain from './models/domain';
 
+import appConfig from './appConfig';
 
-dotenv.config();
+appConfig.listen();
+// dotenv.config();
 
-/**
- * DEFINE MODELS
- * @OBJECT
- * name : modelName;
- * value : modelObject
- */
+// /**
+//  * DEFINE MODELS
+//  * @OBJECT
+//  * name : modelName;
+//  * value : modelObject
+//  */
 
- const models = [
-    {name : 'User',   value : User},
-    {name : 'Domain', value : Domain},
- ];
+//  const models = [
+//     {name : 'User',   value : User},
+//     {name : 'Domain', value : Domain},
+//  ];
   
-const model = new modelIndex(models);
+// const model = new modelIndex(models);
   
 
 
 
- model.db.sequelize.sync({ force: false })
-      .then(() => {
-        console.log('데이터베이스 연결 성공');
-      })
-      .catch((err) => {
-        console.error(err);
- });
+//  model.db.sequelize.sync({ force: false })
+//       .then(() => {
+//         console.log('데이터베이스 연결 성공');
+//       })
+//       .catch((err) => {
+//         console.error(err);
+//  });
 
-/**
- * DEFINE ROUTES
- * @OBJECT
- */
-const routes = [
-    new Auth(),
-    new Index(),
-    new Token(),
-];
+// /**
+//  * DEFINE ROUTES
+//  * @OBJECT
+//  */
+// const routes = [
+//     new Auth(),
+//     new Index(),
+//     new Token(),
+// ];
 
-/**
- * DEFINE MIDDLEWARES
- */
+// /**
+//  * DEFINE MIDDLEWARES
+//  */
 
-const middlewares = [
-    morgan('dev'),
-    express.static(path.join(__dirname, 'public')),
-    express.json(),
-    express.urlencoded({extended: false}),
-    cookieParser(process.env.COOKIE_SECRET),
-    session({
-        resave: false,
-        saveUninitialized: false,
-        secret: process.env.COOKIE_SECRET,
-        cookie: {
-            httpOnly: true,
-            secure: false,
-            }
-    }),     
-    passport.initialize(),
-    passport.session(), 
-]
+// const middlewares = [
+//     morgan('dev'),
+//     express.static(path.join(__dirname, 'public')),
+//     express.json(),
+//     express.urlencoded({extended: false}),
+//     cookieParser(process.env.COOKIE_SECRET),
+//     session({
+//         resave: false,
+//         saveUninitialized: false,
+//         secret: process.env.COOKIE_SECRET,
+//         cookie: {
+//             httpOnly: true,
+//             secure: false,
+//             }
+//     }),     
+//     passport.initialize(),
+//     passport.session(), 
+// ]
 
-/**
- * DEFINE SETTINGS FOR express().set
- */
+// /**
+//  * DEFINE SETTINGS FOR express().set
+//  */
 
-const settings = [
-  {key : 'port', value : process.env.PORT || 8002},
-  {key : 'view engine', value : 'html'},
-]
+// const settings = [
+//   {key : 'port', value : process.env.PORT || 8002},
+//   {key : 'view engine', value : 'html'},
+// ]
 
-const appConfig = {
-    routes : routes,
-    middlewares : middlewares,
-    settings : settings,
-    port : process.env.PORT || 3000,
-};
+// const appConfig = {
+//     routes : routes,
+//     middlewares : middlewares,
+//     settings : settings,
+//     port : process.env.PORT || 3000,
+// };
 
 // CREATE SERVER
-new App(appConfig).listen();

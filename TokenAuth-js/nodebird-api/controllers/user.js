@@ -1,4 +1,5 @@
 import User from '../models/user';
+import Domain from '../models/Domain';
 
 const FindUser = async(req, res, next) => {
     try{              

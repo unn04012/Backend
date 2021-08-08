@@ -18,8 +18,7 @@ export default class Token{
         this.router.get('/test', verifyToken, this.test);        
     }    
 
-    createToken = async(req, res) => {        
-        console.log(req.body);
+    createToken = async(req, res) => {                
         const {clientSecret} = req.body;        
         try{
             const domain = await Domain.findOne({
@@ -28,8 +27,7 @@ export default class Token{
                     model : User,
                     attribute : ['nick', 'id'],
                 },
-            });           
-            console.log(domain) ;
+            });                       
             if(!domain) {                
                 return res.json({
                     code : 401,

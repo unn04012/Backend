@@ -1,6 +1,6 @@
 jest.mock('../models/domain');
 import Domain from '../models/domain';
-import createDomain from "./createDomain";
+import {createDomain} from "./createDomain";
 import {v4 as uuidv4} from 'uuid';
 describe('createDomain', (() => {
     const res = {
