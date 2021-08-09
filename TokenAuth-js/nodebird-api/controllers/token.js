@@ -1,7 +1,10 @@
 import Domain from '../models/domain';
 import User from '../models/user';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
-const createToken = async(req, res) => {                
+const createToken = async(req, res) => {                    
+    dotenv.config();
     const {clientSecret} = req.body;        
     try{
         const domain = await Domain.findOne({
@@ -10,7 +13,8 @@ const createToken = async(req, res) => {
                 model : User,
                 attribute : ['nick', 'id'],
             },
-        });                       
+            
+        });                 
         if(!domain) {                
             return res.json({
                 code : 401,

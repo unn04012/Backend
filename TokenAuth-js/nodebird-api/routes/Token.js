@@ -14,7 +14,7 @@ export default class Token{
     path = '/token';
 
     constructor(){
-        this.router.use(this.allowServer);
+        // this.router.use(this.allowServer);
         this.router.post('/create', createToken);
         this.router.get('/test', verifyToken, test);        
     }    
