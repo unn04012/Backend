@@ -1,0 +1,29 @@
+{
+  "name": "gif-chat",
+  "version": "1.0.0",
+  "description": "git 웹소켓 채팅방",
+  "main": "server.js",
+  "scripts": {
+    "start": "babel-node server.js",
+    "test": "test"
+  },
+  "author": "mun",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "1.4.5",
+    "dotenv": "10.0.0",
+    "express": "4.17.1",
+    "express-session": "1.17.2",
+    "express-template-es6": "1.0.3",
+    "morgan": "1.10.0",
+    "nunjucks": "3.2.3",
+    "ws": "8.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.14.8",
+    "@babel/core": "7.15.0",
+    "@babel/node": "7.14.9",
+    "@babel/preset-env": "7.15.0",
+    "core-js": "3.16.1"
+  }
+}
