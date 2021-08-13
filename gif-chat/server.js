@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
-import WebSocket from 'ws';
+import WebSocket from './routes/socket';
 
 import Index from './routes/Index';
 
@@ -75,15 +75,14 @@ const middlewares = [
  */
 
 const settings = [
-  {key : 'port', value : process.env.PORT || 8002},
+  {key : 'port', value : process.env.PORT || 3000},
   {key : 'view engine', value : 'html'},
 ]
 
 const appConfig = {
     routes : routes,
     middlewares : middlewares,
-    settings : settings,
-    port : process.env.PORT || 3000,
+    settings : settings,    
 };
 
 // CREATE SERVER
