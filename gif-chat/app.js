@@ -1,8 +1,9 @@
 import express from 'express';
 import nunjucks from 'nunjucks';
 
+
 export default class App{
-  app = express();      
+  app = express();     
   constructor(appConfig){    
     nunjucks.configure('views', { // 폴더 경로
       express: this.app,
@@ -53,5 +54,13 @@ export default class App{
     this.app.listen(this.app.get('port'), () => {
       console.log(this.app.get('port'), '번 포트에서 대기중');
     });
+  }
+  socketListen(){
+    const server = this.app.listen(this.app.get('port'), () => {
+      console.log(this.app.get('port'), '번 포트에서 대기중');
+    });
+
+    return server;
+    
   }
 }

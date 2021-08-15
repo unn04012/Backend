@@ -4,11 +4,14 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
-import WebSocket from './routes/socket';
+import WebSocket from './socket';
 
 import Index from './routes/Index';
 
 import App from './app';
+
+import { Server } from "socket.io";
+
 
 
 
@@ -86,6 +89,11 @@ const appConfig = {
 };
 
 // CREATE SERVER
-const server = new App(appConfig).listen();
-WebSocket(server);
+const server = new App(appConfig).socketListen();
+WebSocket(server)
+// const io = new Server(server); // socket.io 패키지를 불러와서 익스프레스 서버와 연결한다.
+// io.on('connection', (socket) => {
+//     console.log('a user connected');
+// });
+// WebSocket(server);
 
