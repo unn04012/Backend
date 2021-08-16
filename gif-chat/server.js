@@ -11,37 +11,14 @@ import Index from './routes/Index';
 import App from './app';
 
 import { Server } from "socket.io";
+import connect from './schemas';
+
 
 
 
 
 dotenv.config();
-
-/**
- * DEFINE MODELS
- * @OBJECT
- * name : modelName;
- * value : modelObject
- * 
- * const models = [
-    {name : 'User',   value : User},
-    {name : 'Domain', value : Domain},
- ];
-  
-const model = new modelIndex(models);
-  
-
-
-
- model.db.sequelize.sync({ force: false })
-      .then(() => {
-        console.log('Database connection successful');
-      })
-      .catch((err) => {
-        console.error(err);
- });
- */
-
+connect();
  
 
 /**
