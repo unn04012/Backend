@@ -33,6 +33,16 @@ const routes = [
  * DEFINE MIDDLEWARES
  */
 
+const sessionMiddleware = session({
+  resave : false,
+  saveUninitialized : false,
+  secret : process.env.COOKIE_SECRET,
+  cookie : {
+    httpOnly: true,
+    secure : false,
+  }
+})
+
 const middlewares = [   
     morgan('dev'),
     express.static(path.join(__dirname, 'public')),
@@ -48,6 +58,7 @@ const middlewares = [
           secure: false,
       }
     }),   
+    sessionMiddleware,
 ];
 
 /**
@@ -66,8 +77,9 @@ const appConfig = {
 };
 
 // CREATE SERVER
-const server = new App(appConfig).socketListen();
-WebSocket(server)
+const appClass = new App(appConfig);
+const server = appClass.socketListen();
+WebSocket(server, appClass.app, sessionMiddleware)
 // const io = new Server(server); // socket.io 패키지를 불러와서 익스프레스 서버와 연결한다.
 // io.on('connection', (socket) => {
 //     console.log('a user connected');

@@ -1,5 +1,8 @@
 import express from 'express';
 
+import Room from '../schemas/room';
+import Chat from '../schemas/chat';
+
 export default class Index{
     path = '/';        
     router = express.Router();
@@ -7,8 +10,9 @@ export default class Index{
         this.router.get('/', this.index);        
     }
     index = async(req, res, next) => {
-        try{              
-            res.render('index', {head : 'express template with es6'})
+        try{
+            const rooms = await Room.find({});
+            res.render('main', {rooms, title : 'GIF 채팅방'});
         }catch(err){
             console.error(err);
             next(err);

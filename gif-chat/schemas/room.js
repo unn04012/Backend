@@ -14,7 +14,7 @@ const roomSchema = new Schema({
     },
     owner : {
         type : String,
-        required : ture,
+        required : true,
     },
     password : String,
     createdAt : {
