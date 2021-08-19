@@ -12,6 +12,7 @@ import App from './app';
 
 import { Server } from "socket.io";
 import connect from './schemas';
+import ColorHash from 'color-hash';    
 
 
 
@@ -42,6 +43,13 @@ const sessionMiddleware = session({
     secure : false,
   }
 })
+const sessionColor = (req, res, next) => {
+  if(!req.session.color){       
+    const colorHash = new ColorHash();
+    req.session.color = colorHash.hex(req.sessionID);
+  }
+  next();
+};
 
 const middlewares = [   
     morgan('dev'),
@@ -49,16 +57,17 @@ const middlewares = [
     express.json(),
     express.urlencoded({extended: false}),        
     cookieParser(process.env.COOKIE_SECRET),
-    session({
-      resave: false,
-      saveUninitialized: false,
-      secret: process.env.COOKIE_SECRET,
-      cookie: {
-          httpOnly: true,
-          secure: false,
-      }
-    }),   
+    // session({
+    //   resave: false,
+    //   saveUninitialized: false,
+    //   secret: process.env.COOKIE_SECRET,
+    //   cookie: {
+    //       httpOnly: true,
+    //       secure: false,
+    //   }
+    // }),   
     sessionMiddleware,
+    sessionColor,
 ];
 
 /**

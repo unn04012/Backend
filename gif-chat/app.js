@@ -1,6 +1,6 @@
 import express from 'express';
 import nunjucks from 'nunjucks';
-import ColorHash from 'color-hash';
+
 
 
 export default class App{
@@ -15,14 +15,7 @@ export default class App{
     this.applyMiddlewares(appConfig.middlewares);           
     this.applyRoutes(appConfig.routes);        
     this.app.use(this.notFoundError);
-    this.app.use(this.serverError);
-    this.app.use((req, res, next) => {
-      if(!req.session.color){
-        const colorHash = new ColorHash();
-        req.session.color = colorHash.hex(req.sessionID);
-      }
-      next();
-    });
+    this.app.use(this.serverError);    
   }
   
 

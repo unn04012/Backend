@@ -9,7 +9,7 @@ export default (server, app, sessionMiddleware) => {
     const chat = io.of('/chat');
 
     io.use((socket, next) => {
-        sessionMiddleware(socket.request, socket.request.request, next);
+        sessionMiddleware(socket.request, socket.request.res, next);
     })
 
     room.on('connection', (socket) => {
@@ -21,8 +21,8 @@ export default (server, app, sessionMiddleware) => {
     
     chat.on('connection', (socket) => {
         console.log('chat 네임스페이스에 접속');
-        const req = socket.request;
-        const {headers : {referer}} = req; 
+        const req = socket.request;        
+        const {headers : {referer}} = req; // socket.request.req.headers.referer
         const roomId = referer.split('/')[referer.split('/').length-1].replace(/\?.+/, '');
 
         socket.join(roomId); // 방에 들어올 경우
@@ -39,7 +39,7 @@ export default (server, app, sessionMiddleware) => {
             const userCount = currentRoom ? currentRoom.length : 0;
 
             if(userCount === 0){
-                const result = await axios.delete(`http://localhost:8005/room/${roomId}`)                    ;
+                const result = await axios.delete(`http://localhost:3000/room/${roomId}`)                    ;
                 if(result) console.log('방 제거 요청 성공');
                 else console.error(result.error);
             }else{
