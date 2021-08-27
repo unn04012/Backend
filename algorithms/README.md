@@ -73,3 +73,19 @@ test.sort((a, b) => {
 - `a.job > b.job`이 거짓일 경우 1, `a.job < b.job` 이 참일 경우 1이 되면서 -1인 음수가 되어서 swap이 실행된다.
 - 매개변수 a,b 는 순서대로 2번째 원소, 1번째 원소가 된다. 즉, 다음 번 째의 원소가 1번째 매개변수로 오기 때문에 `a.job > b.job = 'PORTAL' > 'SI`'가 된다.  이 결과는 거짓이 되므로 0이 된다.
 
+# Array.splice
+
+- 배열의 기존 요소를 삭제 또는 교체하거나 새 요소를 추가하여 배열의 내용을 변경합니다.
+
+```jsx
+const months = ['Jan', 'March', 'April', 'June'];
+months.splice(1, 0, 'Feb');
+// inserts at index 1
+console.log(months);
+// expected output: Array ["Jan", "Feb", "March", "April", "June"]
+```
+
+# Array.slice
+
+- 어떤 배열의 begin부터 end까지(end 미포함)에 대한 얕은 복사본을 새로운 배열 객체로 반환합니다. 원본 배열은 바뀌지 않습니다.
+- 즉 slice는 자른 원소를 반환하고 splice는 자르고 남은 원소들을 반환한다.
