@@ -2,6 +2,8 @@ const { BADFLAGS } = require("dns");
 
 let numbers = [1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5];
 let hand = "right";
+numbers = [7, 0, 8, 2, 8, 3, 1, 5, 7, 6, 2];
+hand = "left";
 solution(numbers, hand);
 /**
  * 
@@ -16,8 +18,8 @@ function solution(numbers, hand) {
     var answer = '';
     let leftHand = [1, 4, 7];
     let rightHand = [3, 6, 9];
-    let lastLeftHand = 0;
-    let lastRightHand = 0;
+    let lastLeftHand = '*';
+    let lastRightHand = '#';
     let phone = [
         [1, 2, 3],
         [4, 5, 6],
@@ -50,7 +52,7 @@ function solution(numbers, hand) {
             result.lastLeftHand = number;
             result.lastRightHand = lastRightHand;
         } else {
-            result.lastLeftHand = lastRightHand;
+            result.lastLeftHand = lastLeftHand;
             result.lastRightHand = number;
         }
         result.hand = direction;
@@ -77,7 +79,6 @@ function solution(numbers, hand) {
         answer += result.hand;
 
     });
-    console.log(answer);
 
     return answer;
 }
