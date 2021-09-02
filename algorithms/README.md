@@ -132,6 +132,17 @@ console.log(s.split('zero')); // [ 'one', '', '' ]
 - 구분자가 one 이므로 해당 문자열을 기준으로 배열로 반환한다. 그래서 배열 길이는 2가 되면서
 - 만약 zero를 구분자로 split 할 경우 배열 길이는 3이 되면서 'one 을 제외한 원소는 빈 배열이 생성된다.
 
+## Split
+
+- split 메서드를 이용하여 변수를 좀 더 간단하게 나타낼 수 있다.
+
+```jsx
+let str = 'Leave uid1234 Prodo';
+const [state, id, nick] = str.split(' ');
+
+console.log(state, id, nick) // Leave uid1234 Prodo
+```
+
 # Array.join([separator])
 
 - 배열의 모든 요소를 연결해 하나의 문자열로 만듭니다.
