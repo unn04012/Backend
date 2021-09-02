@@ -174,3 +174,19 @@ let test2 = {
 console.log(test === test2) // false
 console.log(JSON.stringify(test) === JSON.stringify(test2)) // true
 ```
+
+# 문자열 정렬
+
+문자열인 `hello` 가 있다고 가정했을 때  해당 문자열의 각각의 문자들을 사전순으로 정렬을 할 경우가 있을 수 있다.
+
+- JS의 정렬 메서드인 sort()가 있지만, 해당 메서드는 배열에서 사용할 수 있는 메서드이다.
+- 그래서 해당 문자열을 배열로 선언 후 정렬을 하면 된다.
+
+```jsx
+let str = 'hello';
+str= str.split('').sort().join(''); // ehllo
+```
+
+- split 메서드로 각각의 문자를 배열의 원소로 반환하고 sort()메서드를 사용한다
+- sort() 메서드는 문자 기준으로 정렬되는 메서드 이기 때문에 인자를 넣지 않아도 된다.
+- 그 후 join 메서드로 모든 문자열을 기준 없이 합친다.
