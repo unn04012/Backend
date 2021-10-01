@@ -190,3 +190,120 @@ str= str.split('').sort().join(''); // ehllo
 - split 메서드로 각각의 문자를 배열의 원소로 반환하고 sort()메서드를 사용한다
 - sort() 메서드는 문자 기준으로 정렬되는 메서드 이기 때문에 인자를 넣지 않아도 된다.
 - 그 후 join 메서드로 모든 문자열을 기준 없이 합친다.
+
+# 순열(완전탐색)
+
+- 비트 연산자를 이용하여 구할 수 있다.
+
+```jsx
+const solve = (cnt, used, val) => {
+        if (val !== 0) permutation.push(val);
+        if (cnt >= numbers.length) return;
+        for (let i = 0; i < arr.length; i++) {
+            if ((used & 1 << i) !== 0) continue;
+            solve(cnt + 1, used | 1 << i, val * 10 + arr[i]);
+        }
+}
+solve(0,0,0)
+```
+
+- 위 코드는 [1,2,3]
+- `used & 1 << i` : 같은 수가 들어가는 것을 막기 위해 선언한다.
+- 즉, i 번쨰 원소가 있는지 확인하기 위해 사용한다.
+- 만약 중복 순열을 이용할 경우 해당 line을 지우면 된다.
+- `used | 1 << i` : i 번째 원소를 추가하기 위해 사용한다.
+- 여기서 `used` 는 비트로 표현된 집합이라 생각하면 된다.
+
+# 조합(완전탐색)
+
+- 선택하고 선택 안하고를 생각
+
+```jsx
+const recursive = (str, pos, candi) => {
+        candi = candi.split('').sort().join('');
+        if (pos >= str.length) {
+            if (candi.length >= 2) {
+                if (!foodMaps[candi.length]) foodMaps[candi.length] = maxCount[candi.length] = {};
+                if (!foodMaps[candi.length][candi]) {
+                    foodMaps[candi.length][candi] = 1;
+                } else {
+                    foodMaps[candi.length][candi]++;
+                }
+                maxCount[candi.length] = maxCount[candi.length] >= foodMaps[candi.length][candi] ? maxCount[candi.length] : foodMaps[candi.length][candi];
+
+            }
+            return;
+        }
+   **recursive(str, pos + 1, candi += str[pos]);
+   candi = candi.substring(0, candi.length - 1);
+   recursive(str, pos + 1, candi);**
+ }
+```
+
+위 코드는 카카오 메뉴리뉴얼 문제중 조합 식을 짜는 코드이다.
+
+첫 번째 재귀는 선택을 한다는 것이고 후에 선택된 값을 하나 제거하여 다시 재귀를 하여 선택 안하고를 실행시킨다.
+
+# 진법
+
+- `toString()`
+
+```jsx
+var value = 10;
+// 10진법 -> 2, 8, 16 진법으로 변환
+value.toString(2);    // 1010
+value.toString(8);    // 12
+value.toString(16);   // a
+
+// 2,8,16 -> 10 진법으로 변환
+Number.parseInt(bin, 2);    // 10
+Number.parseInt(oct, 8);    // 10
+Number.parseInt(hex, 16);   // 10
+```
+
+# 배열 순서 당기기
+
+- 배열의 순서를 1칸씩 당기거나 밀어야 하는 경우가 있다.
+
+```jsx
+for (let i = 0; i < arr.length; i++) {
+    arr[i] = arr[i + 1];
+}
+```
+
+- 위 코드는 원소들을 한 칸 씩 당길 때 사용할 수 있는 코드이다.
+- 하지만 앞으로 한 칸 씩 밀 경우는 반대로 해야 한다.
+
+```jsx
+for (let i = arr.length - 1; i >= 0; i--) {
+    arr[i] = arr[i - 1];
+}
+```
+
+- 조건들을 붙여야 배열이 완성되지만 생략했다.
+- 이 방법을 이용해 2차원 배열에서 **직사각형 테두리**를 회전할 경우에 사용할 수 있다.
+
+## 직사각형 테두리 회전
+
+- 2차원 배열에서 테두리를 회전할 경우에 사용할 수 있다.
+- 직사각형의 모서리 중 **왼쪽**과 **아래**쪽을 시계방향으로 밀 경우 배열을 기준으로 보면 당겨지는 것이기 때문에 배열을 1칸 씩 당길 때 사용하는 방법을 하면된다.
+- 하지만 **오른쪽**과 **위쪽**을 시계방향으로 돌릴 경우에는 원소들을 1칸씩 밀게 되는 경우기 때문에 아래와 같은 방식으로 작성을 해야 한다.
+
+# String.repeat()
+
+- 메서드는 문자열을 주어진 횟수만큼 반복해 붙인 새로운 문자열을 반환한다.
+
+```sql
+'abc'.repeat(2) // abcabc
+```
+
+# String.replace()
+
+- 정규표현식을 이용해서 전체 문자열을 치환할 수 있다.
+- 두 번째 매개변수로 함수를 이용할 수 있다.
+
+```jsx
+score = score.replace(/[A-Z]#/g, (e) => e[0].toLowerCase());
+```
+
+- 위 코드는 만약 A#이란 문자열을 찾을 경우 a#으로 치환을 하는 코드이다.
