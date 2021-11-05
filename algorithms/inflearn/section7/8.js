@@ -3,7 +3,7 @@ function solution(n, m) {
     let answer = [];
     let temp = Array.from({ length: m }, () => 0);
     const DFS = (L) => {
-        if (m === L) {
+        if (m === L) {            
             answer.push(temp.slice());
         }
         else {
