@@ -4,7 +4,6 @@ import { join } from 'path/posix';
 
 import { AppModule } from './app.module';
 import { ConfigurationReader } from './configurations/configuration-reader';
-import { SocketIoAdapter } from './websocket';
 
 declare const module: any;
 
@@ -15,7 +14,7 @@ async function bootstrap() {
 
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(join(__dirname, '../public', 'views'));
-  app.setViewEngine('ejs');
+  app.setViewEngine('html');
 
   const { httpPort } = new ConfigurationReader();
   await app.listen(httpPort);
