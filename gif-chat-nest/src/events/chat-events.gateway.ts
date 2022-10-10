@@ -1,8 +1,5 @@
 import {
   MessageBody,
-  OnGatewayConnection,
-  OnGatewayDisconnect,
-  OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
@@ -19,13 +16,15 @@ import { DefaultLogger } from 'src/logger/logger-default';
   cors: {
     origin: '*',
   },
+  namespace: '/chat',
 })
-export class EventsGateway implements NestGateway {
+export class ChatEventsGateway implements NestGateway {
   @WebSocketServer()
-  server: Server;
+  server: Server; // IO
+  private roomId: any;
 
   constructor(private readonly logger: DefaultLogger) {
-    this.logger.setContext('event-gateway');
+    this.logger.setContext('chat-event-gateway');
   }
 
   @SubscribeMessage('events')
@@ -43,10 +42,32 @@ export class EventsGateway implements NestGateway {
   }
 
   public handleDisconnect(client: Socket) {
+    client.leave(this.roomId);
+    const currentRoom = client.rooms[this.roomId];
+    // const userCount = currentRoom ? currentRoom.length : 0;
+    client.to(this.roomId).emit('exit', {
+      user: 'system',
+      chat: `고객님이 퇴장하셨습니다.`,
+    });
+
     this.logger.log(`client disconnected : ${client.id}`);
   }
   public handleConnection(client: Socket) {
-    this.logger.log(`client connected : ${client.id}`);
+    this.logger.log(`client connected to chat namespace : ${client.id}`);
+    const req = client.request;
+    const {
+      headers: { referer },
+    } = req;
+    this.roomId = referer
+      .split('/')
+      [referer.split('/').length - 1].replace(/\?.+/, '');
+
+    client.join(this.roomId);
+    client.to(this.roomId).emit('join', {
+      user: 'system',
+      chat: `고객님이 입장하셨습니다.`,
+    });
+    this.logger.log(`${client.id} join room : ${this.roomId}`);
   }
 
   public afterInit() {

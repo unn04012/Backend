@@ -4,16 +4,17 @@ import { join } from 'path/posix';
 
 import { AppModule } from './app.module';
 import { ConfigurationReader } from './configurations/configuration-reader';
+import * as nunjucks from 'nunjucks';
 
 declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  // app.useWebSocketAdapter(new SocketIoAdapter(app));
-
+  const views = join(__dirname, '../public', 'views');
+  nunjucks.configure(views, { express: app, watch: true });
   app.useStaticAssets(join(__dirname, '..', 'public'));
-  app.setBaseViewsDir(join(__dirname, '../public', 'views'));
+  app.setBaseViewsDir(views);
   app.setViewEngine('html');
 
   const { httpPort } = new ConfigurationReader();
