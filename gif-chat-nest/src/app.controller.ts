@@ -3,6 +3,7 @@ import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
+  //TODO inject event gateway module
   constructor(private readonly appService: AppService) {}
 
   @Get()

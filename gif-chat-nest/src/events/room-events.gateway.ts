@@ -45,6 +45,13 @@ export class RoomEventsGateway implements NestGateway {
   }
   public handleConnection(client: Socket) {
     this.logger.log(`client connected to room namespace : ${client.id}`);
+    const newSpaceName = client.nsp;
+    const newRoom = {
+      _id: 1,
+      title: 'muns room',
+      max: 10,
+    };
+    newSpaceName.emit('newRoom', newRoom);
   }
 
   public afterInit() {
