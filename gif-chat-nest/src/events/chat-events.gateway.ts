@@ -1,4 +1,5 @@
 import {
+  ConnectedSocket,
   MessageBody,
   SubscribeMessage,
   WebSocketGateway,
@@ -41,6 +42,17 @@ export class ChatEventsGateway implements NestGateway {
     return data;
   }
 
+  @SubscribeMessage('message')
+  public chat(
+    @ConnectedSocket() client: Socket,
+    @MessageBody('message') message: string,
+    @MessageBody('roomId') roomId: string,
+  ) {
+    // console.log(roomId, {촘ㅅ});
+
+    client.to(roomId).emit('chat', { chat: message });
+  }
+
   public handleDisconnect(client: Socket) {
     client.leave(this.roomId);
     const currentRoom = client.rooms[this.roomId];
@@ -52,7 +64,8 @@ export class ChatEventsGateway implements NestGateway {
 
     this.logger.log(`client disconnected : ${client.id}`);
   }
-  public handleConnection(client: Socket) {
+
+  public handleConnection(@ConnectedSocket() client: Socket) {
     this.logger.log(`client connected to chat namespace : ${client.id}`);
     const req = client.request;
     const {

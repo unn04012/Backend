@@ -6,5 +6,6 @@ import { RoomEventsGateway } from './room-events.gateway';
 @Module({
   providers: [RoomEventsGateway, ChatEventsGateway],
   imports: [LoggerModule],
+  exports: [RoomEventsGateway, ChatEventsGateway],
 })
 export class EventsModule {}

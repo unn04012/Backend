@@ -29,15 +29,15 @@
     {% endif %} {% endfor %}
   </div>
 </fieldset>
-<form action="/chat" id="chat-form" method="post" enctype="multipart/form-data">
+<form action="/room/1/chat" id="chat-form" method="post">
   <label for="gif">GIF 올리기</label>
   <input type="file" id="gif" name="gif" accept="image/gif" />
   <input type="text" id="chat" name="chat" />
-  <button type="submit">전송</button>
+  <button type="submit" id="submitButton">전송</button>
 </form>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  const socket = io.connect('http://localhost:8005/chat', {
+  const socket = io.connect('http://localhost:3000/chat', {
     path: '/socket.io',
   });
   socket.on('join', function (data) {
@@ -55,6 +55,45 @@
     div.textContent = data.chat;
     div.appendChild(chat);
     document.querySelector('#chat-list').appendChild(div);
+  });
+
+  socket.on('chat', function (data) {
+    console.log(data);
+    const div = document.createElement('div');
+    if (data.user === '{{user}}') {
+      div.classList.add('mine');
+    } else {
+      div.classList.add('other');
+    }
+    const name = document.createElement('div');
+    name.textContent = data.user;
+    div.appendChild(name);
+    if (data.chat) {
+      const chat = document.createElement('div');
+      chat.textContent = data.chat;
+      div.appendChild(chat);
+    } else {
+      const gif = document.createElement('img');
+      gif.src = '/gif/' + data.gif;
+      div.appendChild(gif);
+    }
+    div.style.color = data.user;
+    document.querySelector('#chat-list').appendChild(div);
+  });
+  const submitButton = document.getElementById('submitButton');
+  const formTag = document.getElementById('chat-form');
+  const arr = location.href.split('/');
+  const roomId = arr[arr.length - 1];
+
+  document.querySelector('#chat-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (e.target.chat.value) {
+      const message = document.getElementById('chat').value;
+      // console.log(message, roomId);
+
+      socket.emit('message', { message, roomId });
+      e.target.chat.value = '';
+    }
   });
 </script>
 {% endblock %}

@@ -1,4 +1,5 @@
 import {
+  ConnectedSocket,
   MessageBody,
   SubscribeMessage,
   WebSocketGateway,
@@ -6,10 +7,13 @@ import {
   WsResponse,
 } from '@nestjs/websockets';
 import { NestGateway } from '@nestjs/websockets/interfaces/nest-gateway.interface';
+import ColorHash from 'color-hash';
+import colorHash from 'color-hash';
 
 import { Server } from 'http';
 import { from, map, Observable } from 'rxjs';
 import { Socket } from 'socket.io';
+import { CreateRoomDto } from 'src/app.dto';
 import { DefaultLogger } from 'src/logger/logger-default';
 
 @WebSocketGateway({
@@ -20,7 +24,7 @@ import { DefaultLogger } from 'src/logger/logger-default';
 })
 export class RoomEventsGateway implements NestGateway {
   @WebSocketServer()
-  server: Server;
+  server: Server; // io
 
   constructor(private readonly logger: DefaultLogger) {
     this.logger.setContext('room-event-gateway');
@@ -38,6 +42,21 @@ export class RoomEventsGateway implements NestGateway {
   @SubscribeMessage('identity')
   async identity(@MessageBody() data: number): Promise<number> {
     return data;
+  }
+
+  public createRoom(room: CreateRoomDto) {
+    const { title, max } = room;
+    // const colorHash = new ColorHash();
+    console.log(room);
+    const newRoom = {
+      title,
+      max,
+      _id: 1,
+    };
+
+    this.server.emit('newRoom', newRoom);
+
+    return newRoom;
   }
 
   public handleDisconnect(client: Socket) {
